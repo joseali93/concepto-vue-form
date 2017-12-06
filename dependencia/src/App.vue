@@ -1,27 +1,17 @@
 <template>
   <div id="app">
-    <select class="form-control" v-model="selectproduct" v-on:change="onChangeProd">
-      <option value="" disabled>Productos</option>
-      <option v-for="(data,indice) in productos" :value="data">{{data.nombre}}</option>         
-    </select>
-    <select class="form-control" v-model="selectservice" v-on:change="onChangeSer">
-      <option value="" disabled>Servicios</option>
-      <option v-for="(data,indice) in servicios" :value="data" >{{data.nombre}}</option>         
-    </select>
-   <!-- <div>
+    
+   <div>
       <form>
-        <template v-for="(data,indice) in prueba.campos"> 
-           <input :type="data.type" :min="data.min" :max="data.max" :placeholder="data.placeholder" :value="data.value" required>
-
+        <template v-for="(data,indice) in prueba"> 
+      <input :type="data.type" :id="data.id" :max="data.max" :placeholder="data.placeholder" @keyup="Presiono(indice)"   required>
         </template>
       </form>
     </div>
-    <div>
-      {{selectproduct}}
-      {{selectservice}}
-    </div>-->
-<prueba v-if="selectservice" v-bind:prueba="prueba"></prueba>
-  </div>
+  {{objeto}}
+ 
+    </div>
+  
 </template>
 
 <script>
@@ -41,68 +31,35 @@ export default {
       selectproduct: '',
       servicios: '',
       productos: '',
-      prueba: ''
-      
+      prueba: [{
+        type: 'number',
+        min: '1',
+        max: '99',
+        placeholder: 'peso',
+        id: 'numero',
+        vmodel: 'uno'},
+        
+
+      ],
+      objeto: {
+        uno: ''
+      }
     }
   },
-  render(createElement){
-    console.log("entro render")
-
-    return createElement(form,{
-
-      props : {
-         prueba: this.prueba
-      },
-      on: {
-        save : function(){
-            console.log("hola   mundo")
-        }
-      }
-    })
-    },
+  
   methods: {
-      onChangeProd:function(){
-        console.log("producto")
-        
-         var url = 'http://192.168.1.69:3000/logistica/servicios/5a10ad88222f4a4183f20cc8';
-          this.$http.get(url).then(respuesta =>{
-          this.servicios=respuesta.body;
-//          console.log(this.servicios)
-            return (this.$http.get());
-          }, (error) => console.log(error)); 
+   Presiono(index){
+     console.log("entro")
+         console.log(index) 
+    
+          setTimeout(function(){
+            if(document.getElementById(this.prueba[index].id).value==''){
+            eval("this.objeto."+this.prueba[index].vmodel+"= null");
+            }else{
+            eval("this.objeto."+this.prueba[index].vmodel+"="+document.getElementById(this.prueba[index].id).value);
+            }
+            }.bind(this))
       },
-      onChangeSer: function(){
-        console.log("servicio")
-        var idservicio = this.selectservice._id
-        var idproducto = this.selectproduct._id
-        var url = 'http://192.168.1.69:3000/logistica/estructuraf/'+idproducto+'/'+idservicio;
-        this.$http.get(url).then(respuesta =>{
-        this.prueba=respuesta.body
-        console.log(respuesta)
-        console.log(JSON.stringify(this.prueba))
-
-        })
-      }
-
-  },
-  beforeCreate: function () {
-    
-      console.log("funcion")
-    
-    console.log("antes crear")
-
- 
-    var url = 'http://192.168.1.69:3000/logistica/productos/5a2053336535d593c73c815e';
-        this.$http.get(url).then(respuesta =>{
-        this.productos=respuesta.body;
-        })
-        
-    /*
-    var url = 'http://192.168.1.82:3000/logistica/estructuraf/';
-    this.$http.get(url).then(respuesta =>{
-    this.prueba=respuesta.body;
-    console.log(this.productos)
-    })*/
   }
 }
 </script>   

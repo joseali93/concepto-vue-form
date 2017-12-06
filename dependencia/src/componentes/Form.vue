@@ -7,6 +7,7 @@
         <br><br>
         </template>
       </form>
+      {{prueba}}
          {{objeto}}
 
 
@@ -35,44 +36,16 @@ export default {
           
     
           setTimeout(function(){
-       console.log("this.objeto."+this.prueba.campos[index].vmodel+"="+document.getElementById(this.prueba.campos[index].id).value)
-            if(document.getElementById(this.prueba.campos[index].id).value==''){
-            eval("this.objeto."+this.prueba.campos[index].vmodel+"= null");
+       console.log("this.objeto."+this.prueba.campos.vmodel+"="+document.getElementById(this.prueba.campos.id).value)
+            if(document.getElementById(this.prueba.campos.id).value==''){
+            eval("this.objeto."+this.prueba.campos.vmodel+"= null");
             }else{
-            eval("this.objeto."+this.prueba.campos[index].vmodel+"="+document.getElementById(this.prueba.campos[index].id).value);
+            eval("this.objeto."+this.prueba.campos.vmodel+"="+document.getElementById(this.prueba.campos.id).value);
             }
             }.bind(this))
-
-        
-
-            
-
-
-
-        
-
       },
 
-      algo(indice){
-          console.log(indice)
-         /*  this.objeto= this.prueba.propiedades
-           var limpiar= '';
-           this.prueba.propiedades.uno=limpiar
-        console.log(this.prueba)
-        this.limpiar=this.prueba.propiedades.uno=''
-        console.log(this.objeto)*/
-        }
-  },
-
-    update: function () {
-        console.log("monantes de montad")
-        
-        
-        //console.log(this.prueba.campos)
-        //this.camposvmodel = this.prueba.campos
-        //console.log(this.camposvmodel)
-        
-    },
+  }
 
 }
 </script>
